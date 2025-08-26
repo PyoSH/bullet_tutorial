@@ -1,1 +1,54 @@
 <?xml version="1.0"?>
+<robot name="testing1" xmlns:xacro="http://ros.org/wiki/xacro">
+    <xacro:property name="box_size" value="1.0"/>
+    <xacro:property name="box_mass" value="1.0"/>
+    <xacro:property name="box_inertia" value="${box_mass * (box_size*box_size + box_size*box_size) / 12.0}"/>
+
+    <xacro:macro name="box_link" params="name">
+        <link name="${name}">
+            <visual>
+                <geometry>
+                    <box size="${box_size} ${box_size} ${box_size}"/>
+                </geometry>
+                <origin xyz="0 0 0" rpy="0 0 0"/>
+            </visual>
+            <collision>
+                <origin xyz="0 0 0" rpy="0 0 0"/>
+                <geometry>
+                    <box size="${box_size} ${box_size} ${box_size}"/>
+                </geometry>
+            </collision>
+            <inertial>
+              <origin xyz="0 0 0" rpy="0 0 0"/>
+              <mass value="${box_mass}"/>
+              <inertia
+                ixx="${box_inertia}" ixy="0.0" ixz="0.0"
+                iyy="${box_inertia}" iyz="0.0"
+                izz="${box_inertia}"/>
+            </inertial>
+        </link>
+    </xacro:macro>
+
+    <xacro:macro name="fixed_joint" params="parent child xyz">
+        <joint name="${parent}_${child}" type="fixed">
+            <parent link="${parent}"/>
+            <child link="${child}"/>
+            <origin rpy="0 0 0" xyz="${xyz}"/>
+        </joint>
+    </xacro:macro>
+
+    <xacro:box_link name="0"/>
+    <xacro:box_link name="1"/>
+    <xacro:box_link name="2"/>
+    <xacro:box_link name="3"/>
+    <xacro:box_link name="4"/>
+    <xacro:box_link name="5"/>
+    <xacro:box_link name="6"/>
+
+    <xacro:fixed_joint parent="0" child="1" xyz="0 0 1"/>
+    <xacro:fixed_joint parent="1" child="2" xyz="0 0 1"/>
+    <xacro:fixed_joint parent="2" child="3" xyz="0 1 0"/>
+    <xacro:fixed_joint parent="3" child="4" xyz="0 1 0"/>
+    <xacro:fixed_joint parent="4" child="5" xyz="0 0 -1"/>
+    <xacro:fixed_joint parent="5" child="6" xyz="0 0 -1"/>
+</robot>
