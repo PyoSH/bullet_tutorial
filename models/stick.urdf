@@ -1,0 +1,23 @@
+<?xml version="1.0"?>
+<robot name="pendulum">
+  <link name="pole">
+    <inertial>
+      <mass value="1.0"/>
+      <inertia ixx="0.083" ixy="0.0" ixz="0.0" iyy="0.083" iyz="0.0" izz="0.005"/>
+    </inertial>
+    <visual>
+      <geometry>
+        <cylinder length="1" radius="0.05"/>
+      </geometry>
+      <material name="red">
+          <color rgba="1 0.2 0.2 1"/>
+      </material>
+    </visual>
+    <collision>
+      <geometry>
+        <cylinder length="1" radius="0.05"/>
+      </geometry>
+    </collision>
+  </link>
+
+</robot>
